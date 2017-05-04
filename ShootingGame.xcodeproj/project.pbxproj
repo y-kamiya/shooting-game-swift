@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		353F17181EA33D1600B3C209 /* TestScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353F17171EA33D1600B3C209 /* TestScene.swift */; };
 		35FC8C1C1E9A20FB00B334B4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35FC8C1B1E9A20FB00B334B4 /* AppDelegate.swift */; };
 		35FC8C1E1E9A20FB00B334B4 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 35FC8C1D1E9A20FB00B334B4 /* GameScene.sks */; };
 		35FC8C201E9A20FB00B334B4 /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = 35FC8C1F1E9A20FB00B334B4 /* Actions.sks */; };
@@ -37,6 +38,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		353F17171EA33D1600B3C209 /* TestScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestScene.swift; sourceTree = "<group>"; };
 		35FC8C181E9A20FB00B334B4 /* ShootingGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShootingGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		35FC8C1B1E9A20FB00B334B4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		35FC8C1D1E9A20FB00B334B4 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -105,6 +107,7 @@
 			children = (
 				35FC8C1B1E9A20FB00B334B4 /* AppDelegate.swift */,
 				35FC8C1D1E9A20FB00B334B4 /* GameScene.sks */,
+				353F17171EA33D1600B3C209 /* TestScene.swift */,
 				35FC8C1F1E9A20FB00B334B4 /* Actions.sks */,
 				35FC8C211E9A20FB00B334B4 /* GameScene.swift */,
 				35FC8C231E9A20FB00B334B4 /* GameViewController.swift */,
@@ -270,6 +273,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				353F17181EA33D1600B3C209 /* TestScene.swift in Sources */,
 				35FC8C221E9A20FB00B334B4 /* GameScene.swift in Sources */,
 				35FC8C241E9A20FB00B334B4 /* GameViewController.swift in Sources */,
 				35FC8C1C1E9A20FB00B334B4 /* AppDelegate.swift in Sources */,
@@ -515,6 +519,7 @@
 				35FC8C481E9A20FB00B334B4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		35FC8C491E9A20FB00B334B4 /* Build configuration list for PBXNativeTarget "ShootingGameTests" */ = {
 			isa = XCConfigurationList;
@@ -523,6 +528,7 @@
 				35FC8C4B1E9A20FB00B334B4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		35FC8C4C1E9A20FB00B334B4 /* Build configuration list for PBXNativeTarget "ShootingGameUITests" */ = {
 			isa = XCConfigurationList;
@@ -531,6 +537,7 @@
 				35FC8C4E1E9A20FB00B334B4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
