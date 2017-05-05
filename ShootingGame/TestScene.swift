@@ -57,6 +57,7 @@ class TestScene:SKScene {
     }
     
     private var touchBeganMark: SKShapeNode?
+    private var touchMovedMark: SKShapeNode?
     private var touchBeganPosition: CGPoint?
     private var touchMovedPosition: CGPoint?
     
@@ -72,11 +73,17 @@ class TestScene:SKScene {
         touchBeganPosition = nil;
         touchMovedPosition = nil;
         
-        guard let mark = touchBeganMark else {
+        guard let beganMark = touchBeganMark else {
             return
         }
-        self.removeChildren(in: [mark])
+        self.removeChildren(in: [beganMark])
         touchBeganMark = nil;
+        
+        guard let movedMark = touchMovedMark else {
+            return
+        }
+        self.removeChildren(in: [movedMark])
+        touchMovedMark = nil;
     }
     
     private func shot() {
@@ -96,7 +103,7 @@ class TestScene:SKScene {
             return
         }
         touchBeganPosition = touch.location(in: self.view)
-        touchBeganMark = SKShapeNode(circleOfRadius: 5)
+        touchBeganMark = SKShapeNode(circleOfRadius: 10)
         touchBeganMark?.fillColor = SKColor.red
         touchBeganMark?.position = convertPoint(fromView: touchBeganPosition!)
         self.addChild(touchBeganMark!)
@@ -110,10 +117,19 @@ class TestScene:SKScene {
             return
         }
         touchMovedPosition = touch.location(in: self.view)
+        
+        guard let mark = touchMovedMark else {
+            touchMovedMark = SKShapeNode(circleOfRadius: 5)
+            touchMovedMark?.fillColor = SKColor.blue
+            touchMovedMark?.position = convertPoint(fromView: touchMovedPosition!)
+            self.addChild(touchMovedMark!)
+            return
+        }
+        mark.position = convertPoint(fromView: touchMovedPosition!)
     }
     
     private func movePlayer(_ beganPos: CGPoint, _ movedPos: CGPoint) {
-        let direction = (movedPos - beganPos).normalized()
+        let direction = (convertPoint(fromView: movedPos) - convertPoint(fromView: beganPos)).normalized()
         let distPos = player.position + direction * 10
         player.run(SKAction.move(to: distPos, duration: 0.1))
         print(direction)
