@@ -41,11 +41,21 @@ extension CGPoint {
     }
 }
 
-class TestScene:SKScene {
+class TestScene:SKScene, SKPhysicsContactDelegate {
     
     let player = SKShapeNode(circleOfRadius: 10)
     
+    enum ContactCategory {
+        static let none  :UInt32 = 0
+        static let enemy :UInt32 = 1 << 0
+        static let bullet:UInt32 = 1 << 1
+        static let all   :UInt32 = 1 << 31
+    }
+    
     override func didMove(to view: SKView) {
+        
+        self.physicsWorld.contactDelegate = self
+        self.physicsWorld.gravity = CGVector(dx: 0.0, dy: 0.0)
         
         player.fillColor = SKColor.black
         player.position = CGPoint(x: view.frame.width / 2, y: 50)
@@ -53,6 +63,10 @@ class TestScene:SKScene {
         
         let enemy = SKSpriteNode(imageNamed: "monster")
         enemy.position = CGPoint(x: 200, y: 500)
+        enemy.physicsBody = SKPhysicsBody(texture: enemy.texture!, size: enemy.texture!.size())
+        enemy.physicsBody?.categoryBitMask = ContactCategory.enemy
+        enemy.physicsBody?.collisionBitMask = ContactCategory.none
+        enemy.physicsBody?.contactTestBitMask = ContactCategory.bullet
         self.addChild(enemy)
     }
     
@@ -89,6 +103,9 @@ class TestScene:SKScene {
     private func shot() {
         let shot = SKSpriteNode(imageNamed: "projectile")
         shot.position = player.position
+        shot.physicsBody = SKPhysicsBody(texture: shot.texture!, size: shot.texture!.size())
+        shot.physicsBody?.categoryBitMask = ContactCategory.bullet
+        shot.physicsBody?.collisionBitMask = ContactCategory.none
         self.addChild(shot)
         
         let distPos = CGPoint(x: shot.position.x, y: shot.position.y + 1000)
@@ -96,6 +113,11 @@ class TestScene:SKScene {
             SKAction.move(to: distPos, duration: 2.0)
           , SKAction.removeFromParent()
         ]))
+    }
+    
+    func didBegin(_ contact: SKPhysicsContact) {
+        contact.bodyA.node?.removeFromParent();
+        contact.bodyB.node?.removeFromParent();
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
