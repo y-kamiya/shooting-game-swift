@@ -125,10 +125,6 @@ class TestScene:SKScene, SKPhysicsContactDelegate {
             return
         }
         touchBeganPosition = touch.location(in: self.view)
-        touchBeganMark = SKShapeNode(circleOfRadius: 10)
-        touchBeganMark?.fillColor = SKColor.red
-        touchBeganMark?.position = convertPoint(fromView: touchBeganPosition!)
-        self.addChild(touchBeganMark!)
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -141,20 +137,27 @@ class TestScene:SKScene, SKPhysicsContactDelegate {
         touchMovedPosition = touch.location(in: self.view)
         
         guard let mark = touchMovedMark else {
-            touchMovedMark = SKShapeNode(circleOfRadius: 5)
+            touchMovedMark = SKShapeNode(circleOfRadius: 20)
             touchMovedMark?.fillColor = SKColor.blue
             touchMovedMark?.position = convertPoint(fromView: touchMovedPosition!)
             self.addChild(touchMovedMark!)
             return
         }
         mark.position = convertPoint(fromView: touchMovedPosition!)
+        
+        if (touchBeganMark == nil) {
+            touchBeganMark = SKShapeNode(circleOfRadius: 10)
+            touchBeganMark?.fillColor = SKColor.red
+            touchBeganMark?.position = convertPoint(fromView: touchBeganPosition!)
+            self.addChild(touchBeganMark!)
+        }
+        
     }
     
     private func movePlayer(_ beganPos: CGPoint, _ movedPos: CGPoint) {
         let direction = (convertPoint(fromView: movedPos) - convertPoint(fromView: beganPos)).normalized()
         let distPos = player.position + direction * 10
         player.run(SKAction.move(to: distPos, duration: 0.1))
-        print(direction)
     }
     
     override func update(_ currentTime: TimeInterval) {
@@ -165,6 +168,5 @@ class TestScene:SKScene, SKPhysicsContactDelegate {
             return;
         }
         movePlayer(beganPos, movedPos)
-        print(beganPos, movedPos);
     }
 }
