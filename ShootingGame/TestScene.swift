@@ -60,14 +60,6 @@ class TestScene:SKScene, SKPhysicsContactDelegate {
         player.fillColor = SKColor.black
         player.position = CGPoint(x: view.frame.width / 2, y: 50)
         self.addChild(player)
-        
-        let enemy = SKSpriteNode(imageNamed: "monster")
-        enemy.position = CGPoint(x: 200, y: 500)
-        enemy.physicsBody = SKPhysicsBody(texture: enemy.texture!, size: enemy.texture!.size())
-        enemy.physicsBody?.categoryBitMask = ContactCategory.enemy
-        enemy.physicsBody?.collisionBitMask = ContactCategory.none
-        enemy.physicsBody?.contactTestBitMask = ContactCategory.bullet
-        self.addChild(enemy)
     }
     
     private var touchBeganMark: SKShapeNode?
@@ -160,7 +152,27 @@ class TestScene:SKScene, SKPhysicsContactDelegate {
         player.run(SKAction.move(to: distPos, duration: 0.1))
     }
     
+    private var elapsedSeconds: TimeInterval = 0
+    private var lastUpdatedTime: TimeInterval = 0
+    
+    private let ENEMY_CREATED_INTERVAL: TimeInterval = 1.5
+    private let ENEMY_SPEED_Y: Float = 100
+    
     override func update(_ currentTime: TimeInterval) {
+        elapsedSeconds += currentTime - lastUpdatedTime
+        if (ENEMY_CREATED_INTERVAL < elapsedSeconds) {
+            elapsedSeconds = 0
+            let x = CGFloat(arc4random() % UInt32((view?.frame.width)!))
+            let height = (view?.frame.height)!
+            let position = CGPoint(x:x, y:height)
+            let enemy = createEnemy(position: position)
+            self.addChild(enemy)
+            
+            let duration = Float(height) / ENEMY_SPEED_Y
+            enemy.run(SKAction.move(to: CGPoint(x:x, y:0), duration: TimeInterval(duration)))
+        }
+        lastUpdatedTime = currentTime
+        
         guard let beganPos = touchBeganPosition else {
             return;
         }
@@ -169,4 +181,15 @@ class TestScene:SKScene, SKPhysicsContactDelegate {
         }
         movePlayer(beganPos, movedPos)
     }
+    
+    func createEnemy(position: CGPoint) -> SKNode {
+        let enemy = SKSpriteNode(imageNamed: "monster")
+        enemy.position = position
+        enemy.physicsBody = SKPhysicsBody(texture: enemy.texture!, size: enemy.texture!.size())
+        enemy.physicsBody?.categoryBitMask = ContactCategory.enemy
+        enemy.physicsBody?.collisionBitMask = ContactCategory.none
+        enemy.physicsBody?.contactTestBitMask = ContactCategory.bullet
+        return enemy
+    }
+    
 }
