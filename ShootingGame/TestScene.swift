@@ -47,9 +47,11 @@ class TestScene:SKScene, SKPhysicsContactDelegate {
     
     enum ContactCategory {
         static let none  :UInt32 = 0
-        static let enemy :UInt32 = 1 << 0
-        static let bullet:UInt32 = 1 << 1
-        static let all   :UInt32 = 1 << 31
+        static let player:UInt32 = 1 << 0
+        static let enemy :UInt32 = 1 << 1
+        static let bullet:UInt32 = 1 << 2
+        static let wall  :UInt32 = 1 << 3
+        static let all   :UInt32 = 1 << 31 - 1
     }
     
     override func didMove(to view: SKView) {
@@ -57,9 +59,27 @@ class TestScene:SKScene, SKPhysicsContactDelegate {
         self.physicsWorld.contactDelegate = self
         self.physicsWorld.gravity = CGVector(dx: 0.0, dy: 0.0)
         
+        let frameWidth = view.frame.width 
+        let frameHeight = view.frame.height
+        
         player.fillColor = SKColor.black
-        player.position = CGPoint(x: view.frame.width / 2, y: 50)
+        player.position = CGPoint(x: frameWidth / 2, y: 50)
+        player.physicsBody = SKPhysicsBody(circleOfRadius: 10)
+        player.physicsBody?.categoryBitMask = ContactCategory.player
+        player.physicsBody?.collisionBitMask = ContactCategory.wall + ContactCategory.enemy
+        player.physicsBody?.contactTestBitMask = ContactCategory.all
         self.addChild(player)
+        
+        
+        let origin = CGPoint(x:-10, y:100)
+        let size = CGSize(width: frameWidth + 20, height: frameHeight + 20)
+        let wall = SKShapeNode(rect: CGRect(origin: origin, size: size))
+        wall.physicsBody = SKPhysicsBody(edgeChainFrom: wall.path!)
+        wall.physicsBody?.categoryBitMask = ContactCategory.wall
+        wall.physicsBody?.collisionBitMask = ContactCategory.none
+        wall.physicsBody?.contactTestBitMask = ContactCategory.all
+        wall.fillColor = SKColor.brown
+        self.addChild(wall)
     }
     
     private var touchBeganMark: SKShapeNode?
@@ -108,8 +128,12 @@ class TestScene:SKScene, SKPhysicsContactDelegate {
     }
     
     func didBegin(_ contact: SKPhysicsContact) {
-        contact.bodyA.node?.removeFromParent();
-        contact.bodyB.node?.removeFromParent();
+        if (contact.bodyA.categoryBitMask != ContactCategory.wall) {
+            contact.bodyA.node?.removeFromParent();
+        }
+        if (contact.bodyB.categoryBitMask != ContactCategory.wall) {
+            contact.bodyB.node?.removeFromParent();
+        }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -169,7 +193,7 @@ class TestScene:SKScene, SKPhysicsContactDelegate {
             self.addChild(enemy)
             
             let duration = Float(height) / ENEMY_SPEED_Y
-            enemy.run(SKAction.move(to: CGPoint(x:x, y:0), duration: TimeInterval(duration)))
+            enemy.run(SKAction.move(to: CGPoint(x:x, y:-100), duration: TimeInterval(duration)))
         }
         lastUpdatedTime = currentTime
         
