@@ -66,19 +66,18 @@ class TestScene:SKScene, SKPhysicsContactDelegate {
         player.position = CGPoint(x: frameWidth / 2, y: 50)
         player.physicsBody = SKPhysicsBody(circleOfRadius: 10)
         player.physicsBody?.categoryBitMask = ContactCategory.player
-        player.physicsBody?.collisionBitMask = ContactCategory.wall + ContactCategory.enemy
-        player.physicsBody?.contactTestBitMask = ContactCategory.all
+        player.physicsBody?.collisionBitMask = ContactCategory.none
+        player.physicsBody?.contactTestBitMask = ContactCategory.wall + ContactCategory.enemy
         self.addChild(player)
         
         
-        let origin = CGPoint(x:-10, y:100)
-        let size = CGSize(width: frameWidth + 20, height: frameHeight + 20)
+        let origin = CGPoint(x:-50, y:-50)
+        let size = CGSize(width: frameWidth + 100, height: frameHeight + 100)
         let wall = SKShapeNode(rect: CGRect(origin: origin, size: size))
         wall.physicsBody = SKPhysicsBody(edgeChainFrom: wall.path!)
         wall.physicsBody?.categoryBitMask = ContactCategory.wall
         wall.physicsBody?.collisionBitMask = ContactCategory.none
         wall.physicsBody?.contactTestBitMask = ContactCategory.all
-        wall.fillColor = SKColor.brown
         self.addChild(wall)
     }
     
