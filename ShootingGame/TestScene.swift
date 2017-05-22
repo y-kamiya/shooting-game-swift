@@ -211,6 +211,10 @@ class TestScene:SKScene, SKPhysicsContactDelegate {
     }
     
     func createEnemy(position: CGPoint) -> SKNode {
+        let enemy = Enemy(imageNamed: "monster")
+        enemy.position = position
+        return enemy
+        /*
         let enemy = SKSpriteNode(imageNamed: "monster")
         enemy.position = position
         enemy.physicsBody = SKPhysicsBody(texture: enemy.texture!, size: enemy.texture!.size())
@@ -218,6 +222,7 @@ class TestScene:SKScene, SKPhysicsContactDelegate {
         enemy.physicsBody?.collisionBitMask = ContactCategory.none
         enemy.physicsBody?.contactTestBitMask = ContactCategory.bullet
         return enemy
+ */
     }
     
 }
