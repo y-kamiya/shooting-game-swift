@@ -79,6 +79,9 @@ class TestScene:SKScene, SKPhysicsContactDelegate {
         wall.physicsBody?.collisionBitMask = ContactCategory.none
         wall.physicsBody?.contactTestBitMask = ContactCategory.all
         self.addChild(wall)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.shot), name: Notification.Name("shot"), object: nil)
+        
     }
     
     private var touchBeganMark: SKShapeNode?
@@ -92,7 +95,9 @@ class TestScene:SKScene, SKPhysicsContactDelegate {
         }
         guard let _ = touchMovedPosition else {
             touchBeganPosition = nil;
-            shot()
+            let name = Notification.Name("shot")
+            NotificationCenter.default.post(name: name, object: nil)
+//            shot()
             return
         }
         touchBeganPosition = nil;
@@ -111,7 +116,7 @@ class TestScene:SKScene, SKPhysicsContactDelegate {
         touchMovedMark = nil;
     }
     
-    private func shot() {
+    @objc private func shot() {
         let shot = SKSpriteNode(imageNamed: "projectile")
         shot.position = player.position
         shot.physicsBody = SKPhysicsBody(texture: shot.texture!, size: shot.texture!.size())
