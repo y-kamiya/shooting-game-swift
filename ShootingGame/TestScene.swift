@@ -43,16 +43,7 @@ extension CGPoint {
 
 class TestScene:SKScene, SKPhysicsContactDelegate {
     
-    let player = SKShapeNode(circleOfRadius: 10)
-    
-    enum ContactCategory {
-        static let none  :UInt32 = 0
-        static let player:UInt32 = 1 << 0
-        static let enemy :UInt32 = 1 << 1
-        static let bullet:UInt32 = 1 << 2
-        static let wall  :UInt32 = 1 << 3
-        static let all   :UInt32 = 1 << 31 - 1
-    }
+    let player = Player()
     
     override func didMove(to view: SKView) {
         
@@ -62,12 +53,7 @@ class TestScene:SKScene, SKPhysicsContactDelegate {
         let frameWidth = view.frame.width 
         let frameHeight = view.frame.height
         
-        player.fillColor = SKColor.black
         player.position = CGPoint(x: frameWidth / 2, y: 50)
-        player.physicsBody = SKPhysicsBody(circleOfRadius: 10)
-        player.physicsBody?.categoryBitMask = ContactCategory.player
-        player.physicsBody?.collisionBitMask = ContactCategory.none
-        player.physicsBody?.contactTestBitMask = ContactCategory.wall + ContactCategory.enemy
         self.addChild(player)
         
         
@@ -214,15 +200,6 @@ class TestScene:SKScene, SKPhysicsContactDelegate {
         let enemy = Enemy(imageNamed: "monster")
         enemy.position = position
         return enemy
-        /*
-        let enemy = SKSpriteNode(imageNamed: "monster")
-        enemy.position = position
-        enemy.physicsBody = SKPhysicsBody(texture: enemy.texture!, size: enemy.texture!.size())
-        enemy.physicsBody?.categoryBitMask = ContactCategory.enemy
-        enemy.physicsBody?.collisionBitMask = ContactCategory.none
-        enemy.physicsBody?.contactTestBitMask = ContactCategory.bullet
-        return enemy
- */
     }
     
 }
