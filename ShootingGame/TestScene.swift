@@ -43,7 +43,10 @@ extension CGPoint {
 
 class TestScene:SKScene, SKPhysicsContactDelegate {
     
-    let player = Player()
+    enum NodeName: String {
+        case player = "player"
+        case wall = "wall"
+    }
     
     override func didMove(to view: SKView) {
         
@@ -53,9 +56,10 @@ class TestScene:SKScene, SKPhysicsContactDelegate {
         let frameWidth = view.frame.width 
         let frameHeight = view.frame.height
         
+        let player = Player()
         player.position = CGPoint(x: frameWidth / 2, y: 50)
+        player.name = NodeName.player.rawValue
         self.addChild(player)
-        
         
         let origin = CGPoint(x:-50, y:-50)
         let size = CGSize(width: frameWidth + 100, height: frameHeight + 100)
@@ -103,6 +107,9 @@ class TestScene:SKScene, SKPhysicsContactDelegate {
     }
     
     @objc private func shot() {
+        guard let player = childNode(withName: NodeName.player.rawValue) else {
+            return;
+        }
         let shot = SKSpriteNode(imageNamed: "projectile")
         shot.position = player.position
         shot.physicsBody = SKPhysicsBody(texture: shot.texture!, size: shot.texture!.size())
@@ -160,12 +167,6 @@ class TestScene:SKScene, SKPhysicsContactDelegate {
         
     }
     
-    private func movePlayer(_ beganPos: CGPoint, _ movedPos: CGPoint) {
-        let direction = (convertPoint(fromView: movedPos) - convertPoint(fromView: beganPos)).normalized()
-        let distPos = player.position + direction * 10
-        player.run(SKAction.move(to: distPos, duration: 0.1))
-    }
-    
     private var elapsedSeconds: TimeInterval = 0
     private var lastUpdatedTime: TimeInterval = 0
     
@@ -193,13 +194,24 @@ class TestScene:SKScene, SKPhysicsContactDelegate {
         guard let movedPos = touchMovedPosition else {
             return;
         }
-        movePlayer(beganPos, movedPos)
+        
+        guard let player = childNode(withName: NodeName.player.rawValue) as? Player else {
+            return;
+        }
+        let direction = self.getUnitVecor(start: beganPos, end: movedPos)
+        player.move(for: direction)
     }
     
     func createEnemy(position: CGPoint) -> SKNode {
         let enemy = Enemy(imageNamed: "monster")
         enemy.position = position
         return enemy
+    }
+    
+    private func getUnitVecor(start: CGPoint, end: CGPoint) -> CGPoint {
+        let startP = convertPoint(fromView: start)
+        let endP = convertPoint(fromView: end)
+        return (endP - startP).normalized()
     }
     
 }
