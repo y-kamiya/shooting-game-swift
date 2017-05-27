@@ -129,20 +129,13 @@ class TestScene:SKScene, SKPhysicsContactDelegate {
     private var lastUpdatedTime: TimeInterval = 0
     
     private let ENEMY_CREATED_INTERVAL: TimeInterval = 1.5
-    private let ENEMY_SPEED_Y: Float = 100
     
     override func update(_ currentTime: TimeInterval) {
         elapsedSeconds += currentTime - lastUpdatedTime
         if (ENEMY_CREATED_INTERVAL < elapsedSeconds) {
             elapsedSeconds = 0
-            let x = CGFloat(arc4random() % UInt32((view?.frame.width)!))
-            let height = (view?.frame.height)!
-            let position = CGPoint(x:x, y:height)
-            let enemy = createEnemy(position: position)
+            let enemy = Enemy(frame: (view?.frame)!)
             self.addChild(enemy)
-            
-            let duration = Float(height) / ENEMY_SPEED_Y
-            enemy.run(SKAction.move(to: CGPoint(x:x, y:-100), duration: TimeInterval(duration)))
         }
         lastUpdatedTime = currentTime
         
@@ -158,12 +151,6 @@ class TestScene:SKScene, SKPhysicsContactDelegate {
         }
         let direction = self.getUnitVecor(start: beganPos, end: movedPos)
         player.move(for: direction)
-    }
-    
-    func createEnemy(position: CGPoint) -> SKNode {
-        let enemy = Enemy(imageNamed: "monster")
-        enemy.position = position
-        return enemy
     }
     
     private func getUnitVecor(start: CGPoint, end: CGPoint) -> CGPoint {
