@@ -110,18 +110,8 @@ class TestScene:SKScene, SKPhysicsContactDelegate {
         guard let player = childNode(withName: NodeName.player.rawValue) else {
             return;
         }
-        let shot = SKSpriteNode(imageNamed: "projectile")
-        shot.position = player.position
-        shot.physicsBody = SKPhysicsBody(texture: shot.texture!, size: shot.texture!.size())
-        shot.physicsBody?.categoryBitMask = ContactCategory.bullet
-        shot.physicsBody?.collisionBitMask = ContactCategory.none
+        let shot = Bullet(position: player.position)
         self.addChild(shot)
-        
-        let distPos = CGPoint(x: shot.position.x, y: shot.position.y + 1000)
-        shot.run(SKAction.sequence([
-            SKAction.move(to: distPos, duration: 2.0)
-          , SKAction.removeFromParent()
-        ]))
     }
     
     func didBegin(_ contact: SKPhysicsContact) {
