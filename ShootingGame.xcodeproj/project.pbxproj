@@ -12,6 +12,7 @@
 		35EE340E1ED92C85009BE05C /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35EE340D1ED92C85009BE05C /* Extensions.swift */; };
 		35EE34101ED944D4009BE05C /* PlayerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35EE340F1ED944D4009BE05C /* PlayerController.swift */; };
 		35EE34121EDAA110009BE05C /* ShootingLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35EE34111EDAA110009BE05C /* ShootingLayer.swift */; };
+		35EE34141EDAB77C009BE05C /* MenuLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35EE34131EDAB77C009BE05C /* MenuLayer.swift */; };
 		35FB75F51ED31AC600E10EA3 /* Unit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35FB75F41ED31AC600E10EA3 /* Unit.swift */; };
 		35FB75F71ED3216200E10EA3 /* Enemy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35FB75F61ED3216200E10EA3 /* Enemy.swift */; };
 		35FB75F91ED466CD00E10EA3 /* ContactCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35FB75F81ED466CD00E10EA3 /* ContactCategory.swift */; };
@@ -48,6 +49,7 @@
 		35EE340D1ED92C85009BE05C /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		35EE340F1ED944D4009BE05C /* PlayerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerController.swift; sourceTree = "<group>"; };
 		35EE34111EDAA110009BE05C /* ShootingLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShootingLayer.swift; sourceTree = "<group>"; };
+		35EE34131EDAB77C009BE05C /* MenuLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuLayer.swift; sourceTree = "<group>"; };
 		35FB75F41ED31AC600E10EA3 /* Unit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Unit.swift; sourceTree = "<group>"; };
 		35FB75F61ED3216200E10EA3 /* Enemy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Enemy.swift; sourceTree = "<group>"; };
 		35FB75F81ED466CD00E10EA3 /* ContactCategory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactCategory.swift; sourceTree = "<group>"; };
@@ -130,6 +132,7 @@
 				35EE340D1ED92C85009BE05C /* Extensions.swift */,
 				35EE340F1ED944D4009BE05C /* PlayerController.swift */,
 				35EE34111EDAA110009BE05C /* ShootingLayer.swift */,
+				35EE34131EDAB77C009BE05C /* MenuLayer.swift */,
 			);
 			path = ShootingGame;
 			sourceTree = "<group>";
@@ -287,6 +290,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				35EE34141EDAB77C009BE05C /* MenuLayer.swift in Sources */,
 				353F17181EA33D1600B3C209 /* TestScene.swift in Sources */,
 				35EE340E1ED92C85009BE05C /* Extensions.swift in Sources */,
 				35FB75F71ED3216200E10EA3 /* Enemy.swift in Sources */,

@@ -20,6 +20,9 @@ class TestScene:SKScene {
         shootingLayer = ShootingLayer(with: view.frame.size)
         self.addChild(shootingLayer!)
         
+        let menuLayer = MenuLayer(with: view.frame.size)
+        self.addChild(menuLayer)
+        
         self.physicsWorld.contactDelegate = shootingLayer
         self.physicsWorld.gravity = CGVector(dx: 0.0, dy: 0.0)
     }

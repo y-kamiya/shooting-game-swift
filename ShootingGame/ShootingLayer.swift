@@ -28,7 +28,6 @@ class ShootingLayer: SKNode, SKPhysicsContactDelegate {
         let frameHeight = size.height
         
         player.position = CGPoint(x: frameWidth / 2, y: 50)
-        print(player.position)
         player.name = NodeName.player.rawValue
         self.addChild(player)
         
@@ -55,11 +54,21 @@ class ShootingLayer: SKNode, SKPhysicsContactDelegate {
     }
     
     func didBegin(_ contact: SKPhysicsContact) {
+        if (contact.bodyA.node?.parent == nil || contact.bodyB.node?.parent == nil) {
+            return
+        }
+        
         if (contact.bodyA.categoryBitMask != ContactCategory.wall) {
             contact.bodyA.node?.removeFromParent();
         }
         if (contact.bodyB.categoryBitMask != ContactCategory.wall) {
             contact.bodyB.node?.removeFromParent();
+        }
+        let bitmask = contact.bodyA.categoryBitMask + contact.bodyB.categoryBitMask
+        let targetBistmask = ContactCategory.bullet + ContactCategory.enemy
+        if (bitmask == targetBistmask) {
+            let name = Notification.Name("enemyDeadByBullet")
+            NotificationCenter.default.post(name: name, object: nil)
         }
     }
     
