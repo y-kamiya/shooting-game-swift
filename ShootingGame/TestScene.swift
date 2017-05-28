@@ -16,10 +16,14 @@ class TestScene:SKScene, SKPhysicsContactDelegate {
         case wall = "wall"
     }
     
+    let playerController = PlayerController()
+    
     override func didMove(to view: SKView) {
         
         self.physicsWorld.contactDelegate = self
         self.physicsWorld.gravity = CGVector(dx: 0.0, dy: 0.0)
+        
+        self.addChild(playerController)
         
         let frameWidth = view.frame.width 
         let frameHeight = view.frame.height
@@ -42,36 +46,16 @@ class TestScene:SKScene, SKPhysicsContactDelegate {
         
     }
     
-    private var touchBeganMark: SKShapeNode?
-    private var touchMovedMark: SKShapeNode?
-    private var touchBeganPosition: CGPoint?
-    private var touchMovedPosition: CGPoint?
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        playerController.touchesBegan(touches, with: event)
+    }
+    
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        playerController.touchesMoved(touches, with: event)
+    }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard let _ = touchBeganPosition else {
-            return
-        }
-        guard let _ = touchMovedPosition else {
-            touchBeganPosition = nil;
-            let name = Notification.Name("shot")
-            NotificationCenter.default.post(name: name, object: nil)
-//            shot()
-            return
-        }
-        touchBeganPosition = nil;
-        touchMovedPosition = nil;
-        
-        guard let beganMark = touchBeganMark else {
-            return
-        }
-        self.removeChildren(in: [beganMark])
-        touchBeganMark = nil;
-        
-        guard let movedMark = touchMovedMark else {
-            return
-        }
-        self.removeChildren(in: [movedMark])
-        touchMovedMark = nil;
+        playerController.touchesEnded(touches, with: event)
     }
     
     @objc private func shot() {
@@ -91,40 +75,6 @@ class TestScene:SKScene, SKPhysicsContactDelegate {
         }
     }
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard let touch = touches.first else {
-            return
-        }
-        touchBeganPosition = touch.location(in: self.view)
-    }
-    
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard let _ = touchBeganPosition else {
-            return
-        }
-        guard let touch = touches.first else {
-            return
-        }
-        touchMovedPosition = touch.location(in: self.view)
-        
-        guard let mark = touchMovedMark else {
-            touchMovedMark = SKShapeNode(circleOfRadius: 20)
-            touchMovedMark?.fillColor = SKColor.blue
-            touchMovedMark?.position = convertPoint(fromView: touchMovedPosition!)
-            self.addChild(touchMovedMark!)
-            return
-        }
-        mark.position = convertPoint(fromView: touchMovedPosition!)
-        
-        if (touchBeganMark == nil) {
-            touchBeganMark = SKShapeNode(circleOfRadius: 10)
-            touchBeganMark?.fillColor = SKColor.red
-            touchBeganMark?.position = convertPoint(fromView: touchBeganPosition!)
-            self.addChild(touchBeganMark!)
-        }
-        
-    }
-    
     private var elapsedSeconds: TimeInterval = 0
     private var lastUpdatedTime: TimeInterval = 0
     
@@ -139,10 +89,10 @@ class TestScene:SKScene, SKPhysicsContactDelegate {
         }
         lastUpdatedTime = currentTime
         
-        guard let beganPos = touchBeganPosition else {
+        guard let beganPos = playerController.getTouchBeganPosition() else {
             return;
         }
-        guard let movedPos = touchMovedPosition else {
+        guard let movedPos = playerController.getTouchMovedPosition() else {
             return;
         }
         
