@@ -13,15 +13,19 @@ class TestScene:SKScene {
     
     let playerController = PlayerController()
     var shootingLayer: ShootingLayer?
+    var menuLayer: MenuLayer?
     
     override func didMove(to view: SKView) {
+        self.backgroundColor = SKColor.white
+        self.scaleMode = .aspectFill
+        
         self.addChild(playerController)
         
         shootingLayer = ShootingLayer(with: view.frame.size)
         self.addChild(shootingLayer!)
         
-        let menuLayer = MenuLayer(with: view.frame.size)
-        self.addChild(menuLayer)
+        menuLayer = MenuLayer(with: view.frame.size)
+        self.addChild(menuLayer!)
         
         self.physicsWorld.contactDelegate = shootingLayer
         self.physicsWorld.gravity = CGVector(dx: 0.0, dy: 0.0)
@@ -37,6 +41,7 @@ class TestScene:SKScene {
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         playerController.touchesEnded(touches, with: event)
+        menuLayer?.touchesEnded(touches, with: event)
     }
     
     private var elapsedSeconds: TimeInterval = 0
