@@ -55,40 +55,14 @@ class ShootingLayer: SKNode, SKPhysicsContactDelegate {
     }
     
     func didBegin(_ contact: SKPhysicsContact) {
-        if (contact.bodyA.node?.parent == nil || contact.bodyB.node?.parent == nil) {
+        guard let nodeA = contact.bodyA.node as? Collidable else {
             return
         }
-        
-        let bitmask = contact.bodyA.categoryBitMask + contact.bodyB.categoryBitMask
-        let playerItem = ContactCategory.player + ContactCategory.item
-        if (bitmask == playerItem) {
-            var p : Player
-            var i : Item
-            if (contact.bodyA.categoryBitMask == ContactCategory.player) {
-                p = contact.bodyA.node as! Player
-                i = contact.bodyB.node as! Item
-            } else {
-                p = contact.bodyB.node as! Player
-                i = contact.bodyA.node as! Item
-            }
-            p.getItem()
-            i.removeFromParent()
+        guard let nodeB = contact.bodyB.node as? Collidable else {
             return
         }
-        
-        if (contact.bodyA.categoryBitMask != ContactCategory.wall) {
-            contact.bodyA.node?.removeFromParent();
-        }
-        if (contact.bodyB.categoryBitMask != ContactCategory.wall) {
-            contact.bodyB.node?.removeFromParent();
-        }
-        
-        let bulletEnemy = ContactCategory.bullet + ContactCategory.enemy
-        if (bitmask == bulletEnemy) {
-            let name = Notification.Name("enemyDeadByBullet")
-            NotificationCenter.default.post(name: name, object: nil)
-            return
-        }
+        nodeA.collide(with: contact.bodyB.categoryBitMask);
+        nodeB.collide(with: contact.bodyA.categoryBitMask);
     }
     
     func movePlayer(direction: CGPoint) {

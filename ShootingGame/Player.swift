@@ -39,4 +39,11 @@ class Player: Unit {
     public func getItem() {
         velocity += 2
     }
+    
+    override func collide(with bitmask: UInt32) {
+        if (bitmask == ContactCategory.item) {
+            return getItem()
+        }
+        removeFromParent()
+    }
 }

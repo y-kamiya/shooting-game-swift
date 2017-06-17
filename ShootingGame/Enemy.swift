@@ -34,4 +34,11 @@ class Enemy: Unit {
         let duration = Float(position.y) / ENEMY_SPEED_Y
         run(SKAction.move(to: CGPoint(x:position.x, y:-100), duration: TimeInterval(duration)))
     }
+    
+    override func collide(with _: UInt32) {
+        removeFromParent()
+        let name = Notification.Name("enemyDeadByBullet")
+        NotificationCenter.default.post(name: name, object: nil)
+    }
+    
 }

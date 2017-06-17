@@ -9,7 +9,7 @@
 import Foundation
 import SpriteKit
 
-class Unit: SKSpriteNode {
+class Unit: SKSpriteNode, Collidable {
     
     override init(texture: SKTexture?, color: UIColor, size: CGSize) {
         super.init(texture: texture, color: color, size: size)
@@ -19,5 +19,9 @@ class Unit: SKSpriteNode {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func collide(with: UInt32) {
+        fatalError("collide(node:) has not been implemented")
     }
 }

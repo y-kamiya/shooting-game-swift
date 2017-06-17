@@ -33,4 +33,8 @@ class Bullet: Unit {
           , SKAction.removeFromParent()
         ]))
     }
+    
+    override func collide(with _: UInt32) {
+        removeFromParent()
+    }
 }
