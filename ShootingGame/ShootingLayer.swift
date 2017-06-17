@@ -31,6 +31,10 @@ class ShootingLayer: SKNode, SKPhysicsContactDelegate {
         player.name = NodeName.player.rawValue
         self.addChild(player)
         
+        let item = Item()
+        item.position = CGPoint(x:100, y:100)
+        addChild(item)
+        
         let origin = CGPoint(x:-50, y:-50)
         let size = CGSize(width: frameWidth + 100, height: frameHeight + 100)
         let wall = SKShapeNode(rect: CGRect(origin: origin, size: size))
@@ -46,15 +50,29 @@ class ShootingLayer: SKNode, SKPhysicsContactDelegate {
     }
     
     @objc private func shot() {
-        guard let player = childNode(withName: NodeName.player.rawValue) else {
-            return;
-        }
-        let shot = Bullet(position: player.position)
-        self.addChild(shot)
+        let bullets = player.shot()
+        bullets.forEach({ bullet in self.addChild(bullet) })
     }
     
     func didBegin(_ contact: SKPhysicsContact) {
         if (contact.bodyA.node?.parent == nil || contact.bodyB.node?.parent == nil) {
+            return
+        }
+        
+        let bitmask = contact.bodyA.categoryBitMask + contact.bodyB.categoryBitMask
+        let playerItem = ContactCategory.player + ContactCategory.item
+        if (bitmask == playerItem) {
+            var p : Player
+            var i : Item
+            if (contact.bodyA.categoryBitMask == ContactCategory.player) {
+                p = contact.bodyA.node as! Player
+                i = contact.bodyB.node as! Item
+            } else {
+                p = contact.bodyB.node as! Player
+                i = contact.bodyA.node as! Item
+            }
+            p.getItem()
+            i.removeFromParent()
             return
         }
         
@@ -64,18 +82,16 @@ class ShootingLayer: SKNode, SKPhysicsContactDelegate {
         if (contact.bodyB.categoryBitMask != ContactCategory.wall) {
             contact.bodyB.node?.removeFromParent();
         }
-        let bitmask = contact.bodyA.categoryBitMask + contact.bodyB.categoryBitMask
-        let targetBistmask = ContactCategory.bullet + ContactCategory.enemy
-        if (bitmask == targetBistmask) {
+        
+        let bulletEnemy = ContactCategory.bullet + ContactCategory.enemy
+        if (bitmask == bulletEnemy) {
             let name = Notification.Name("enemyDeadByBullet")
             NotificationCenter.default.post(name: name, object: nil)
+            return
         }
     }
     
     func movePlayer(direction: CGPoint) {
-        guard let player = childNode(withName: NodeName.player.rawValue) as? Player else {
-            return;
-        }
         player.move(for: direction)
     }
     

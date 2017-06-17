@@ -14,5 +14,6 @@ enum ContactCategory {
     static let enemy :UInt32 = 1 << 1
     static let bullet:UInt32 = 1 << 2
     static let wall  :UInt32 = 1 << 3
+    static let item  :UInt32 = 1 << 4
     static let all   :UInt32 = 1 << 31 - 1
 }

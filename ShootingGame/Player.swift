@@ -11,6 +11,8 @@ import SpriteKit
 
 class Player: Unit {
     
+    var velocity: Float = 3
+    
     convenience init() {
         self.init(imageNamed: "player")
     }
@@ -26,7 +28,15 @@ class Player: Unit {
     }
     
     public func move(for direction: CGPoint) {
-        let distPos = position + direction * 10
-        run(SKAction.move(to: distPos, duration: 0.1))
+        let distPos = position + direction * CGFloat(velocity)
+        run(SKAction.move(to: distPos, duration: 0.01))
+    }
+    
+    public func shot() -> [Bullet] {
+        return [Bullet(position: position)]
+    }
+    
+    public func getItem() {
+        velocity += 2
     }
 }
