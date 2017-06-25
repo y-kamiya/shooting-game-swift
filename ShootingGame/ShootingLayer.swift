@@ -43,8 +43,11 @@ class ShootingLayer: SKNode, SKPhysicsContactDelegate {
         bullets.forEach({ bullet in self.addChild(bullet) })
     }
     
-    @objc private func enemyDead() {
-        createItem(position: CGPoint(x: 200, y: 200))
+    @objc private func enemyDead(notification: Notification) {
+        guard let position = notification.object as? CGPoint else {
+            return
+        }
+        createItem(position: position)
     }
     
     func didBegin(_ contact: SKPhysicsContact) {
@@ -69,7 +72,7 @@ class ShootingLayer: SKNode, SKPhysicsContactDelegate {
     
     func createItem(position: CGPoint) {
         let item = Item(position: position)
-        item.position = CGPoint(x:100, y:100)
+        item.position = position
         self.addChild(item)
     }
 }

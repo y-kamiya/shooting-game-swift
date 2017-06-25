@@ -40,7 +40,7 @@ class Enemy: Unit {
         if (mask == ContactCategory.wall) {
             return
         }
-        NotificationCenter.default.post(name: Event.enemyDead.name, object: nil)
+        NotificationCenter.default.post(name: Event.enemyDead.name, object: position)
     }
     
 }
