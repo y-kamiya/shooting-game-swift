@@ -11,11 +11,6 @@ import SpriteKit
 
 class ShootingLayer: SKNode, SKPhysicsContactDelegate {
     
-    enum NodeName: String {
-        case player = "player"
-        case wall = "wall"
-    }
-    
     let player = Player()
     
     convenience init(with size: CGSize) {
@@ -28,7 +23,6 @@ class ShootingLayer: SKNode, SKPhysicsContactDelegate {
         let frameHeight = size.height
         
         player.position = CGPoint(x: frameWidth / 2, y: 50)
-        player.name = NodeName.player.rawValue
         self.addChild(player)
         
         let item = Item()
@@ -41,7 +35,7 @@ class ShootingLayer: SKNode, SKPhysicsContactDelegate {
         field.setPhysicsBody()
         self.addChild(field)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(self.shot), name: Notification.Name("shot"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.shot), name: Event.shot.name, object: nil)
         
     }
     

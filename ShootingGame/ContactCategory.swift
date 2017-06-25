@@ -17,3 +17,13 @@ enum ContactCategory {
     static let item  :UInt32 = 1 << 4
     static let all   :UInt32 = 1 << 31 - 1
 }
+
+enum Event: String {
+    case shot      = "shot"
+    case enemyDead = "enemyDead"
+    
+    var name: Notification.Name {
+        return Notification.Name(self.rawValue)
+    }
+}
+    

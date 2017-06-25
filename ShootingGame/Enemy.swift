@@ -40,8 +40,7 @@ class Enemy: Unit {
         if (mask == ContactCategory.wall) {
             return
         }
-        let name = Notification.Name("enemyDeadByBullet")
-        NotificationCenter.default.post(name: name, object: nil)
+        NotificationCenter.default.post(name: Event.enemyDead.name, object: nil)
     }
     
 }

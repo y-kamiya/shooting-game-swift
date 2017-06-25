@@ -27,7 +27,7 @@ class MenuLayer: SKNode {
         menuButton.fillColor = SKColor.gray
         self.addChild(menuButton)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(self.updateScore), name: Notification.Name("enemyDeadByBullet"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.updateScore), name: Event.enemyDead.name, object: nil)
     }
     
     private func createScoreLabel() -> SKLabelNode {
