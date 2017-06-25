@@ -35,8 +35,11 @@ class Enemy: Unit {
         run(SKAction.move(to: CGPoint(x:position.x, y:-100), duration: TimeInterval(duration)))
     }
     
-    override func collide(with _: UInt32) {
+    override func collide(with mask: UInt32) {
         removeFromParent()
+        if (mask == ContactCategory.wall) {
+            return
+        }
         let name = Notification.Name("enemyDeadByBullet")
         NotificationCenter.default.post(name: name, object: nil)
     }
