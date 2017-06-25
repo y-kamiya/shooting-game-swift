@@ -25,9 +25,7 @@ class ShootingLayer: SKNode, SKPhysicsContactDelegate {
         player.position = CGPoint(x: frameWidth / 2, y: 50)
         self.addChild(player)
         
-        let item = Item()
-        item.position = CGPoint(x:100, y:100)
-        addChild(item)
+        createItem(position: CGPoint(x:100, y:100))
         
         let origin = CGPoint(x:-50, y:-50)
         let size = CGSize(width: frameWidth + 100, height: frameHeight + 100)
@@ -36,12 +34,17 @@ class ShootingLayer: SKNode, SKPhysicsContactDelegate {
         self.addChild(field)
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.shot), name: Event.shot.name, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.enemyDead), name: Event.enemyDead.name, object: nil)
         
     }
     
     @objc private func shot() {
         let bullets = player.shot()
         bullets.forEach({ bullet in self.addChild(bullet) })
+    }
+    
+    @objc private func enemyDead() {
+        createItem(position: CGPoint(x: 200, y: 200))
     }
     
     func didBegin(_ contact: SKPhysicsContact) {
@@ -62,5 +65,11 @@ class ShootingLayer: SKNode, SKPhysicsContactDelegate {
     func createEnemy() {
         let enemy = Enemy(frame: self.scene!.view!.frame)
         self.addChild(enemy)
+    }
+    
+    func createItem(position: CGPoint) {
+        let item = Item(position: position)
+        item.position = CGPoint(x:100, y:100)
+        self.addChild(item)
     }
 }

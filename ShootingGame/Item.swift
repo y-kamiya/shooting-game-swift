@@ -11,8 +11,9 @@ import SpriteKit
 
 class Item: Unit {
     
-    convenience init() {
+    convenience init(position: CGPoint) {
         self.init(imageNamed: "player")
+        self.position = position
     }
     
     override init(texture: SKTexture?, color: UIColor, size: CGSize) {
