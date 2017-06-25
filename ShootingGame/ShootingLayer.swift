@@ -37,13 +37,9 @@ class ShootingLayer: SKNode, SKPhysicsContactDelegate {
         
         let origin = CGPoint(x:-50, y:-50)
         let size = CGSize(width: frameWidth + 100, height: frameHeight + 100)
-        let wall = SKShapeNode(rect: CGRect(origin: origin, size: size))
-        wall.physicsBody = SKPhysicsBody(edgeChainFrom: wall.path!)
-        wall.physicsBody?.categoryBitMask = ContactCategory.wall
-        wall.physicsBody?.collisionBitMask = ContactCategory.none
-        wall.physicsBody?.contactTestBitMask = ContactCategory.all
-        wall.name = NodeName.wall.rawValue
-        self.addChild(wall)
+        let field = Field(rect: CGRect(origin: origin, size: size))
+        field.setPhysicsBody()
+        self.addChild(field)
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.shot), name: Notification.Name("shot"), object: nil)
         
