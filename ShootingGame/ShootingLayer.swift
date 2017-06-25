@@ -34,6 +34,8 @@ class ShootingLayer: SKNode, SKPhysicsContactDelegate {
         self.addChild(field)
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.shot), name: Event.shot.name, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.playerDead), name: Event.playerDead.name, object: nil)
+        
         NotificationCenter.default.addObserver(self, selector: #selector(self.enemyDead), name: Event.enemyDead.name, object: nil)
         
     }
@@ -41,6 +43,22 @@ class ShootingLayer: SKNode, SKPhysicsContactDelegate {
     @objc private func shot() {
         let bullets = player.shot()
         bullets.forEach({ bullet in self.addChild(bullet) })
+    }
+    
+    @objc private func playerDead() {
+        let scene = self.scene as! TestScene
+        scene.view?.isPaused = true
+//        DispatchQueue.main.asyncAfter(deadline: .now(), execute: scene.restart)
+        
+        guard let size = scene.view?.frame.size else {
+            return
+        }
+        let gameOverLabel = SKLabelNode(text: "Game Over")
+        gameOverLabel.position = CGPoint(x: size.width / 2, y: size.height / 2)
+        gameOverLabel.fontColor = SKColor.black
+        gameOverLabel.horizontalAlignmentMode = .center
+        gameOverLabel.verticalAlignmentMode = .center
+        addChild(gameOverLabel)
     }
     
     @objc private func enemyDead(notification: Notification) {

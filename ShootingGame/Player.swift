@@ -45,5 +45,6 @@ class Player: Unit {
             return getItem()
         }
         removeFromParent()
+        NotificationCenter.default.post(name: Event.playerDead.name, object: nil)
     }
 }

@@ -50,10 +50,8 @@ class MenuLayer: SKNode {
         for touch in touches {
             let location = touch.location(in: self.scene!)
             if (menuButton.contains(location)) {
-//                self.scene?.view?.isPaused = true
-                let transition = SKTransition.fade(withDuration: 2.0)
-                let scene = TestScene(size: (self.scene?.view?.frame.size)!)
-                self.scene?.view?.presentScene(scene, transition: transition)
+                let scene = self.scene as! TestScene
+                scene.restart()
             }
         }
     }

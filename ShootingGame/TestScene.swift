@@ -31,6 +31,12 @@ class TestScene:SKScene {
         self.physicsWorld.gravity = CGVector(dx: 0.0, dy: 0.0)
     }
     
+    func restart() {
+        let transition = SKTransition.fade(withDuration: 1.0)
+        let scene = TestScene(size: (self.view?.frame.size)!)
+        self.view?.presentScene(scene, transition: transition)
+    }
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         playerController.touchesBegan(touches, with: event)
     }
