@@ -48,7 +48,10 @@ class ShootingLayer: SKNode, SKPhysicsContactDelegate {
     @objc private func playerDead() {
         let scene = self.scene as! TestScene
         scene.view?.isPaused = true
-//        DispatchQueue.main.asyncAfter(deadline: .now(), execute: scene.restart)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
+            scene.view?.isPaused = false
+            scene.restart()
+        })
         
         guard let size = scene.view?.frame.size else {
             return
