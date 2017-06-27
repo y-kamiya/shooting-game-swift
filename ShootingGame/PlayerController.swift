@@ -64,8 +64,7 @@ class PlayerController : SKNode {
         }
         guard let _ = touchMovedPosition else {
             touchBeganPosition = nil;
-            let name = Notification.Name("shot")
-            NotificationCenter.default.post(name: name, object: nil)
+            NotificationCenter.default.post(name: Event.shot.name, object: nil)
             return
         }
         touchBeganPosition = nil;
