@@ -11,10 +11,26 @@ import SpriteKit
 
 class PlayerController : SKNode {
     
-    private var touchBeganMark: SKShapeNode?
-    private var touchMovedMark: SKShapeNode?
-    private var touchBeganPosition: CGPoint?
-    private var touchMovedPosition: CGPoint?
+    private var touchBeganMark: SKShapeNode
+    private var touchMovedMark: SKShapeNode
+    private var touchBeganPosition: CGPoint? = nil
+    private var touchMovedPosition: CGPoint? = nil
+    
+    override init() {
+        touchMovedMark = SKShapeNode(circleOfRadius: 20)
+        touchMovedMark.fillColor = SKColor.blue
+        touchBeganMark = SKShapeNode(circleOfRadius: 10)
+        touchBeganMark.fillColor = SKColor.red
+        
+        super.init()
+        
+        addChild(touchMovedMark)
+        addChild(touchBeganMark)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     func getTouchBeganPosition() -> CGPoint? {
         return touchBeganPosition
@@ -40,22 +56,10 @@ class PlayerController : SKNode {
         }
         touchMovedPosition = touch.location(in: self.scene!.view)
         
-        guard let mark = touchMovedMark else {
-            touchMovedMark = SKShapeNode(circleOfRadius: 20)
-            touchMovedMark?.fillColor = SKColor.blue
-            touchMovedMark?.position = self.scene!.convertPoint(fromView: touchMovedPosition!)
-            self.addChild(touchMovedMark!)
-            return
-        }
-        mark.position = self.scene!.convertPoint(fromView: touchMovedPosition!)
-        
-        if (touchBeganMark == nil) {
-            touchBeganMark = SKShapeNode(circleOfRadius: 10)
-            touchBeganMark?.fillColor = SKColor.red
-            touchBeganMark?.position = self.scene!.convertPoint(fromView: touchBeganPosition!)
-            self.addChild(touchBeganMark!)
-        }
-        
+        touchBeganMark.position = self.scene!.convertPoint(fromView: touchBeganPosition!)
+        touchMovedMark.position = self.scene!.convertPoint(fromView: touchMovedPosition!) 
+        touchBeganMark.isHidden = false
+        touchMovedMark.isHidden = false
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -70,16 +74,7 @@ class PlayerController : SKNode {
         touchBeganPosition = nil;
         touchMovedPosition = nil;
         
-        guard let beganMark = touchBeganMark else {
-            return
-        }
-        self.removeChildren(in: [beganMark])
-        touchBeganMark = nil;
-        
-        guard let movedMark = touchMovedMark else {
-            return
-        }
-        self.removeChildren(in: [movedMark])
-        touchMovedMark = nil;
+        touchBeganMark.isHidden = true
+        touchMovedMark.isHidden = true
     }
 }
