@@ -28,8 +28,9 @@ class Player: Unit {
     }
     
     public func move(for direction: CGPoint) {
-        let distPos = position + direction * CGFloat(velocity)
-        run(SKAction.move(to: distPos, duration: 0.01))
+        let vel = CGFloat(velocity)
+        let vecter = CGVector(dx: direction.x * vel, dy: direction.y * vel)
+        run(SKAction.move(by: vecter, duration: 0.001))
     }
     
     public func shot() -> [Bullet] {
