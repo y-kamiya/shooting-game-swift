@@ -12,7 +12,7 @@ import SpriteKit
 class Item: Unit {
     
     convenience init(position: CGPoint) {
-        self.init(imageNamed: "player")
+        self.init(imageNamed: "item")
         self.position = position
     }
     

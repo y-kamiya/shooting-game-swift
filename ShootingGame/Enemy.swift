@@ -14,7 +14,7 @@ class Enemy: Unit {
     private let ENEMY_SPEED_Y: Float = 100
     
     convenience init(frame: CGRect) {
-        self.init(imageNamed: "monster")
+        self.init(imageNamed: "enemy")
         let x = CGFloat(arc4random() % UInt32(frame.width))
         self.position = CGPoint(x:x, y:frame.height)
         self.move()
