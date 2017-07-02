@@ -12,6 +12,7 @@ import SpriteKit
 class ShootingLayer: SKNode, SKPhysicsContactDelegate {
     
     let player = Player()
+    var itemOwned = 0
     
     convenience init(with size: CGSize) {
         self.init()
@@ -37,6 +38,9 @@ class ShootingLayer: SKNode, SKPhysicsContactDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(self.playerDead), name: Event.playerDead.name, object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.enemyDead), name: Event.enemyDead.name, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.speedup), name: Event.speedup.name, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.upgradeShot), name: Event.upgradeShot.name, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.addOption), name: Event.addOption.name, object: nil)
         
     }
     
@@ -69,6 +73,18 @@ class ShootingLayer: SKNode, SKPhysicsContactDelegate {
             return
         }
         createItem(position: position)
+    }
+    
+    @objc private func speedup() {
+        player.speedup()
+    }
+    
+    @objc private func upgradeShot() {
+        player.speedup()
+    }
+    
+    @objc private func addOption() {
+        player.speedup()
     }
     
     func didBegin(_ contact: SKPhysicsContact) {

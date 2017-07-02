@@ -11,7 +11,14 @@ import SpriteKit
 
 class Player: Unit {
     
+    enum ShotType {
+        case Default
+        case threeWay
+    }
+    
     var velocity: Float = 3
+    var itemOwned: Int = 0
+    var currentShotType = ShotType.Default
     
     convenience init() {
         self.init(imageNamed: "player")
@@ -37,12 +44,30 @@ class Player: Unit {
         return [Bullet(position: position)]
     }
     
-    public func getItem() {
-        velocity += 2
+    private func getItem() {
+        itemOwned += 1
+    }
+    
+    private func useItem() -> Bool {
+        if (0 < itemOwned) {
+            itemOwned -= 1
+            return true;
+        }
+        return false
+    }
+    
+    public func speedup() {
+        print("speedup")
+        let isUsed = useItem()
+        if (isUsed) {
+            velocity += 2
+            print("speedup success")
+        }
     }
     
     override func collide(with bitmask: UInt32) {
         if (bitmask == ContactCategory.item) {
+            print("getItem")
             return getItem()
         }
         removeFromParent()

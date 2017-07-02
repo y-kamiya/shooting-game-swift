@@ -19,9 +19,12 @@ enum ContactCategory {
 }
 
 enum Event: String {
-    case shot       = "shot"
-    case playerDead = "playerDead"
-    case enemyDead  = "enemyDead"
+    case shot        = "shot"
+    case playerDead  = "playerDead"
+    case enemyDead   = "enemyDead"
+    case speedup     = "speedup"
+    case upgradeShot = "upgradeShot"
+    case addOption   = "addOption"
     
     var name: Notification.Name {
         return Notification.Name(self.rawValue)
