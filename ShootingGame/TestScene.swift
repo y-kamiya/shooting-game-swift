@@ -16,7 +16,7 @@ class TestScene:SKScene {
     var menuLayer: MenuLayer?
     
     override func didMove(to view: SKView) {
-        self.backgroundColor = SKColor.white
+        self.backgroundColor = SKColor.black
         self.scaleMode = .aspectFill
         
         self.addChild(playerController)
