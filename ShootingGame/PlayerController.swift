@@ -19,8 +19,10 @@ class PlayerController : SKNode {
     override init() {
         touchMovedMark = SKShapeNode(circleOfRadius: 20)
         touchMovedMark.fillColor = SKColor.blue
+        touchMovedMark.isHidden = true
         touchBeganMark = SKShapeNode(circleOfRadius: 10)
         touchBeganMark.fillColor = SKColor.red
+        touchBeganMark.isHidden = true
         
         super.init()
         
