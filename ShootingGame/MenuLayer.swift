@@ -34,7 +34,7 @@ class MenuLayer: SKNode {
         let scoreLabel = SKLabelNode(text: "0")
         scoreLabel.position = CGPoint(x: 10, y: 10)
         scoreLabel.fontSize = 36
-        scoreLabel.fontColor = SKColor.black
+        scoreLabel.fontColor = SKColor.white
         scoreLabel.horizontalAlignmentMode = .left
         return scoreLabel
     }

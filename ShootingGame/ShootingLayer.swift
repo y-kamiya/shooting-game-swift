@@ -58,7 +58,7 @@ class ShootingLayer: SKNode, SKPhysicsContactDelegate {
         }
         let gameOverLabel = SKLabelNode(text: "Game Over")
         gameOverLabel.position = CGPoint(x: size.width / 2, y: size.height / 2)
-        gameOverLabel.fontColor = SKColor.black
+        gameOverLabel.fontColor = SKColor.white
         gameOverLabel.horizontalAlignmentMode = .center
         gameOverLabel.verticalAlignmentMode = .center
         addChild(gameOverLabel)
