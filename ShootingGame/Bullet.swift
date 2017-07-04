@@ -11,7 +11,7 @@ import SpriteKit
 
 class Bullet: Unit {
     
-    convenience init(position: CGPoint) {
+    convenience init(from position: CGPoint) {
         self.init(imageNamed: "bullet")
         self.position = position
         self.move()

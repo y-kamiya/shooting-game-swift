@@ -80,7 +80,7 @@ class ShootingLayer: SKNode, SKPhysicsContactDelegate {
     }
     
     @objc private func upgradeShot() {
-        player.speedup()
+        player.upgradeShot()
     }
     
     @objc private func addOption() {

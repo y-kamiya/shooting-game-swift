@@ -11,9 +11,10 @@ import SpriteKit
 
 class Player: Unit {
     
-    enum ShotType {
+    enum ShotType: Int {
         case Default
-        case threeWay
+        case Double
+        case ThreeWay
     }
     
     var velocity: Float = 3
@@ -41,7 +42,22 @@ class Player: Unit {
     }
     
     public func shot() -> [Bullet] {
-        return [Bullet(position: position)]
+        return createBullets()
+    }
+    
+    private func createBullets() -> [Bullet] {
+        print(position)
+        switch currentShotType {
+        case .Default: return [Bullet(from: position)]
+        case .Double: return [
+            Bullet(from: CGPoint(x: position.x - 10, y: position.y)),
+            Bullet(from: CGPoint(x: position.x + 10, y: position.y))]
+        case .ThreeWay: return [
+            BulletSkewRight(from: position),
+            Bullet(from: CGPoint(x: position.x - 10, y: position.y)),
+            Bullet(from: CGPoint(x: position.x + 10, y: position.y)),
+            BulletSkewLeft(from: position)]
+        }
     }
     
     private func getItem() {
@@ -57,12 +73,19 @@ class Player: Unit {
     }
     
     public func speedup() {
-        print("speedup")
         let isUsed = useItem()
         if (isUsed) {
             velocity += 2
             print("speedup success")
         }
+    }
+    
+    public func upgradeShot() {
+        let type = ShotType(rawValue: currentShotType.rawValue + 1)
+        guard let nextType = type else {
+            return
+        }
+        currentShotType = nextType
     }
     
     override func collide(with bitmask: UInt32) {
