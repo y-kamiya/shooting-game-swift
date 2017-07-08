@@ -64,7 +64,7 @@ class Player: Unit {
         itemOwned += 1
     }
     
-    private func useItem() -> Bool {
+    private func useItem(num: Int) -> Bool {
         if (0 < itemOwned) {
             itemOwned -= 1
             return true;
@@ -73,7 +73,7 @@ class Player: Unit {
     }
     
     public func speedup() {
-        let isUsed = useItem()
+        let isUsed = useItem(num: Item.NumRequired.speedup)
         if (isUsed) {
             velocity += 2
             print("speedup success")
@@ -81,6 +81,10 @@ class Player: Unit {
     }
     
     public func upgradeShot() {
+        let isUsed = useItem(num: Item.NumRequired.upgradeShot)
+        if (!isUsed) {
+            return
+        }
         let type = ShotType(rawValue: currentShotType.rawValue + 1)
         guard let nextType = type else {
             return

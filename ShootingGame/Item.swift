@@ -11,6 +11,12 @@ import SpriteKit
 
 class Item: Unit {
     
+    enum NumRequired {
+        static let speedup = 1
+        static let upgradeShot = 3
+        static let addOption = 5
+    }
+    
     convenience init(position: CGPoint) {
         self.init(imageNamed: "item")
         self.position = position
