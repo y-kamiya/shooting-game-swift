@@ -18,6 +18,7 @@
 		35EE34141EDAB77C009BE05C /* MenuLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35EE34131EDAB77C009BE05C /* MenuLayer.swift */; };
 		35F2252F1F0B904B00DFFEC6 /* BulletSkewRight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F2252E1F0B904B00DFFEC6 /* BulletSkewRight.swift */; };
 		35F225311F0B920100DFFEC6 /* BulletSkewLeft.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F225301F0B920100DFFEC6 /* BulletSkewLeft.swift */; };
+		35F225331F12376B00DFFEC6 /* PlayerOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F225321F12376A00DFFEC6 /* PlayerOption.swift */; };
 		35FB75F51ED31AC600E10EA3 /* Unit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35FB75F41ED31AC600E10EA3 /* Unit.swift */; };
 		35FB75F71ED3216200E10EA3 /* Enemy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35FB75F61ED3216200E10EA3 /* Enemy.swift */; };
 		35FB75F91ED466CD00E10EA3 /* ContactCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35FB75F81ED466CD00E10EA3 /* ContactCategory.swift */; };
@@ -60,6 +61,7 @@
 		35EE34131EDAB77C009BE05C /* MenuLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuLayer.swift; sourceTree = "<group>"; };
 		35F2252E1F0B904B00DFFEC6 /* BulletSkewRight.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BulletSkewRight.swift; sourceTree = "<group>"; };
 		35F225301F0B920100DFFEC6 /* BulletSkewLeft.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BulletSkewLeft.swift; sourceTree = "<group>"; };
+		35F225321F12376A00DFFEC6 /* PlayerOption.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerOption.swift; sourceTree = "<group>"; };
 		35FB75F41ED31AC600E10EA3 /* Unit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Unit.swift; sourceTree = "<group>"; };
 		35FB75F61ED3216200E10EA3 /* Enemy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Enemy.swift; sourceTree = "<group>"; };
 		35FB75F81ED466CD00E10EA3 /* ContactCategory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactCategory.swift; sourceTree = "<group>"; };
@@ -156,6 +158,7 @@
 				35EE34131EDAB77C009BE05C /* MenuLayer.swift */,
 				352DE6F91EF5251B003D9EBB /* Collidable.swift */,
 				352DE6FB1EF53E1A003D9EBB /* Field.swift */,
+				35F225321F12376A00DFFEC6 /* PlayerOption.swift */,
 			);
 			path = ShootingGame;
 			sourceTree = "<group>";
@@ -324,6 +327,7 @@
 				35EE34121EDAA110009BE05C /* ShootingLayer.swift in Sources */,
 				352DE6F81EE29BE3003D9EBB /* Item.swift in Sources */,
 				35F225311F0B920100DFFEC6 /* BulletSkewLeft.swift in Sources */,
+				35F225331F12376B00DFFEC6 /* PlayerOption.swift in Sources */,
 				35FB75FB1ED467CC00E10EA3 /* Player.swift in Sources */,
 				35FB75F91ED466CD00E10EA3 /* ContactCategory.swift in Sources */,
 				35FC8C1C1E9A20FB00B334B4 /* AppDelegate.swift in Sources */,

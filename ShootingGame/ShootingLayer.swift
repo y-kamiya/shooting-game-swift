@@ -84,7 +84,8 @@ class ShootingLayer: SKNode, SKPhysicsContactDelegate {
     }
     
     @objc private func addOption() {
-        player.speedup()
+        let option = player.addOption()
+        self.addChild(option)
     }
     
     func didBegin(_ contact: SKPhysicsContact) {

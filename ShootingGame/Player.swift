@@ -11,6 +11,8 @@ import SpriteKit
 
 class Player: Unit {
     
+    var options: [PlayerOption] = []
+    
     enum ShotType: Int {
         case Default
         case Double
@@ -90,6 +92,12 @@ class Player: Unit {
             return
         }
         currentShotType = nextType
+    }
+    
+    public func addOption() -> PlayerOption {
+        let option = PlayerOption(position: position)
+        options.append(option)
+        return option
     }
     
     override func collide(with bitmask: UInt32) {
