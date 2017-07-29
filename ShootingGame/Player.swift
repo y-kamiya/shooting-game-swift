@@ -12,6 +12,7 @@ import SpriteKit
 class Player: Unit {
     
     var options: [PlayerOption] = []
+    var moveHistory: [CGVector] = []
     
     enum ShotType: Int {
         case Default
@@ -39,8 +40,27 @@ class Player: Unit {
     
     public func move(for direction: CGPoint) {
         let vel = CGFloat(velocity)
-        let vecter = CGVector(dx: direction.x * vel, dy: direction.y * vel)
-        run(SKAction.move(by: vecter, duration: 0.001))
+        let vector = CGVector(dx: direction.x * vel, dy: direction.y * vel)
+        run(SKAction.move(by: vector, duration: 0.001))
+        
+        if (options.count == 0) {
+            return
+        }
+        if (200 < moveHistory.count) {
+            moveHistory = moveHistory.suffix(options.count * 20).map { $0 }
+            print("history is sliced")
+        }
+        moveHistory.append(vector)
+        let historyCount = moveHistory.count
+        for id in (1 ..< options.count + 1) {
+            let index = historyCount - id * 20
+            if (index < 0) {
+                continue
+            }
+            let vector = moveHistory[index]
+            let option = options[id - 1]
+            option.move(for: vector)
+        }
     }
     
     public func shot() -> [Bullet] {
