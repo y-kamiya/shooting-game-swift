@@ -20,7 +20,8 @@ class Player: Unit {
         case ThreeWay
     }
     
-    var velocity: Float = 3
+    static let INITIAL_VELOCITY: Float = 3
+    var velocity: Float = INITIAL_VELOCITY
     var itemOwned: Int = 0
     var currentShotType = ShotType.Default
     
@@ -46,14 +47,18 @@ class Player: Unit {
         if (options.count == 0) {
             return
         }
+        moveHistory.append(vector)
+        moveOptions()
+    }
+    
+    private func moveOptions() {
         if (200 < moveHistory.count) {
-            moveHistory = moveHistory.suffix(options.count * 20).map { $0 }
+            moveHistory = moveHistory.suffix(options.count * diffCount()).map { $0 }
             print("history is sliced")
         }
-        moveHistory.append(vector)
         let historyCount = moveHistory.count
         for id in (1 ..< options.count + 1) {
-            let index = historyCount - id * 20
+            let index = historyCount - id * diffCount()
             if (index < 0) {
                 continue
             }
@@ -63,12 +68,19 @@ class Player: Unit {
         }
     }
     
-    public func shot() -> [Bullet] {
-        return createBullets()
+    private func diffCount() -> Int {
+        return Int(Player.INITIAL_VELOCITY / velocity * 20)
     }
     
-    private func createBullets() -> [Bullet] {
-        print(position)
+    public func shot() -> [Bullet] {
+        var bullets = createBullets(at: position)
+        for option in options {
+            bullets.append(contentsOf: createBullets(at: option.position))
+        }
+        return bullets
+    }
+    
+    private func createBullets(at position:CGPoint) -> [Bullet] {
         switch currentShotType {
         case .Default: return [Bullet(from: position)]
         case .Double: return [
